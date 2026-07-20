@@ -879,13 +879,19 @@ with _rcol:
 _nav_hour = nav_time.hour + nav_time.minute / 60.0
 _nav_now  = datetime(nav_date.year, nav_date.month, nav_date.day)
 _nh = nav_time.hour; _nm = nav_time.minute
+_SUN_HELP_TEXT = (
+    "☀️ גובה שמש = זווית השמש מעל קו האופק (0°=זריחה/שקיעה, 90°=ישר מעל הראש) — "
+    "ככל שגבוה יותר, הצללים קצרים יותר ויש פחות צל ברחוב.  \n"
+    "🧭 אזימוט = הכיוון האופקי של השמש במעלות (0°=צפון, 90°=מזרח, 180°=דרום, 270°=מערב) — "
+    "קובע מאיזה צד נופל הצל."
+)
 if _PYSOLAR:
     from zoneinfo import ZoneInfo as _ZI
     _dtc = datetime(nav_date.year, nav_date.month, nav_date.day,
                     _nh, _nm, tzinfo=_ZI("Asia/Jerusalem"))
     _ca = float(_solar.get_altitude(32.08, 34.77, _dtc))
     _cz = float(_solar.get_azimuth(32.08, 34.77, _dtc))
-    st.caption(f"🕐 {_nh:02d}:{_nm:02d} · שמש: גובה {_ca:.0f}° · אזימוט {_cz:.0f}°")
+    st.caption(f"🕐 {_nh:02d}:{_nm:02d} · שמש: גובה {_ca:.0f}° · אזימוט {_cz:.0f}°", help=_SUN_HELP_TEXT)
 else:
     _ca = 45.0
     st.caption(f"🕐 {_nh:02d}:{_nm:02d}")
@@ -2742,7 +2748,7 @@ TCI = clip( 1 + 9 &times; (sun_altitude/80) &times; (1 &minus; cloud_cover/100) 
                     _sun_side = "ממערב (אחה\"צ) → צל מצד מערב"
                 else:
                     _sun_side = "מדרום (צהריים) → צללים קצרים"
-                st.caption(f"השמש בשעה זו: גובה {_sun_sel:.0f}° · אזימוט {_SUN_AZ_REF:.0f}° — {_sun_side}.")
+                st.caption(f"השמש בשעה זו: גובה {_sun_sel:.0f}° · אזימוט {_SUN_AZ_REF:.0f}° — {_sun_side}.", help=_SUN_HELP_TEXT)
             _CLOUD_NOON = 0.05
 
             _bundle = load_tci_model() if _tci_source == "מודל ML" else None
