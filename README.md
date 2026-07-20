@@ -1,3 +1,5 @@
+<div dir="rtl">
+
 # SHADY — Thermal-Comfort Urban Routing System
 
 🌐 **[Live App: shady-smart-navigation.streamlit.app](https://shady-smart-navigation.streamlit.app/)**
@@ -444,3 +446,5 @@ GROQ_API_KEY=... python -m pytest tests/test_agent_llm.py -v
 
 
 *Alisa & Rony — LBS Course 160833, Technion*
+
+</div>
